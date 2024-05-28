@@ -1,24 +1,13 @@
-const asyncHandler =
-  (requestHandler: (arg0: any, arg1: any, arg2: any) => any) =>
-  async (
-    req: any,
-    res: {
-      status: (arg0: number) => {
-        (): any;
-        new (): any;
-        json: { (arg0: { success: boolean; message: any }): void; new (): any };
-      };
-    },
-    next: any
-  ) => {
+import { Request, Response, NextFunction, RequestHandler } from "express";
+
+const AsyncHandler = (requestHandler: RequestHandler) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     try {
       await requestHandler(req, res, next);
     } catch (error: any) {
-      res.status(501).json({
-        success: false,
-        message: error.message,
-      });
+      next(error);
     }
   };
+};
 
-export default asyncHandler;
+export default AsyncHandler;

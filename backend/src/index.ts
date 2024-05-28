@@ -1,4 +1,4 @@
-// index.ts
+
 import ConnectDB from './config/db';
 import dotenv from 'dotenv';
 import app from './app';
