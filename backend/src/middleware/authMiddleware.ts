@@ -1,31 +1,37 @@
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 import ApiError from "../utils/ApiError";
 import AsyncHandler from "../utils/AsyncHandler";
-import jwt from "jsonwebtoken"
-import {User} from "../models/User"
+import { User } from "../models/User";
 
-export const VerifyJwt = AsyncHandler(async(req,res,next)=>{
-    try {
-        const token =
-      req.cookies?.AccessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+interface CustomRequest extends Request {
+  user?: any; // Ideally, you should define a proper user type based on your User model
+}
 
-    if (!token) {
-      throw new ApiError(401, "Unauthorized request");
+export const VerifyJwt = AsyncHandler(async (req: CustomRequest, res: Response, next: NextFunction) => {
+  const token = req.cookies?.AccessToken || req.header("Authorization")?.replace("Bearer ", "");
+
+  if (!token) {
+    return next(new ApiError(401, "Unauthorized request"));
+  }
+
+  try {
+    const secret = process.env.ACCESS_TOKEN_SECRET;
+    if (!secret) {
+      throw new ApiError(500, "Missing token secret");
     }
 
-    const decodeToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "") as jwt.JwtPayload;
+    const decodedToken = jwt.verify(token, secret) as jwt.JwtPayload;
 
-    const user = await User.findById(decodeToken?._id).select(
-      "-password -RefreshToken"
-    );
+    const user = await User.findById(decodedToken._id).select("-password -RefreshToken");
 
     if (!user) {
-      throw new ApiError(400, "Invalid accesss ");
+      return next(new ApiError(400, "Invalid access"));
     }
 
     req.user = user;
     next();
-    } catch (error:any) {
-        throw new ApiError(404,error.message ||"Invalid Access Token")
-    }
-})
+  } catch (error: any) {
+    next(new ApiError(401, error.message || "Invalid Access Token"));
+  }
+});
