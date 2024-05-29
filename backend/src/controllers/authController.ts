@@ -160,7 +160,7 @@ const onboarding = AsyncHandler(async(req: Request, res: Response, next: NextFun
 
 const logout = AsyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   await User.findByIdAndUpdate(
-    req.user._id,
+    req.user._id!,
     {
       $unset: {
         RefreshToken: 1,
