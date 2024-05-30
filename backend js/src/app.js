@@ -16,7 +16,9 @@ app.use(express.urlencoded());
 app.use(express.static("public"));
 app.use(cookieParser());
 
+import userRouter from "./routes/userRoutes.js";
 
+app.use("/api/v1/auth", userRouter);
 
 app.on("error", (error) => {
   console.log("Error on the server", error);
