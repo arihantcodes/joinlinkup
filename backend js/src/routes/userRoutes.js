@@ -12,6 +12,7 @@ import {
   getCurrentUser,
   UpdateUserDetails,
   UpdateUserAvatar,
+  sociallinks,
 } from "../controllers/authController.js";
 
 const router = Router();
@@ -23,6 +24,7 @@ router.route("/logout").post(verifyJWT, Logout);
 router.route("/refreshtoken").post(RefreshAccessToken);
 router.route("/forgotpassword").post(verifyJWT, changeCurrentPassword);
 router.route("/current-user").get(verifyJWT, getCurrentUser);
+router.route("/dashboard").post(verifyJWT, sociallinks );
 router.route("/onboarding").patch(
   upload.fields([
     {

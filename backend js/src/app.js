@@ -17,8 +17,10 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 import userRouter from "./routes/userRoutes.js";
+import paymentRouter from "./routes/paymentroute.js";
 
 app.use("/api/v1/auth", userRouter);
+app.use("/api/payment", paymentRouter);
 
 app.on("error", (error) => {
   console.log("Error on the server", error);

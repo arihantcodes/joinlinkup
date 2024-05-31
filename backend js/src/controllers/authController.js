@@ -4,7 +4,7 @@ import { User } from "../models/User.js";
 import uploadonCloudnary from "../utils/cloudinary.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
+
 
 const generateAccessTokenandRefreshToken = async (userId) => {
   try {
@@ -271,6 +271,37 @@ const UpdateUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "Avatar Image Upload Succesfully"));
 });
 
+const sociallinks = asyncHandler(async (req, res) => {
+  const { platform, url } = req.body;
+
+  if (!platform) {
+    throw new ApiError(400, "Platform is required");
+  }
+  if(!url){
+    throw new ApiError(400, "url is required");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $push: {
+        socialLinks: {
+          platform,
+          url,
+        },
+      },
+    },
+    {
+      new: true,
+    }
+  ).select("-password");
+  return res
+  .status(200)
+  .json(new ApiResponse(200, user, "Social Link Added Successfully"));
+
+})
+
+
 export {
   registerUser,
   loginUser,
@@ -280,5 +311,5 @@ export {
   getCurrentUser,
   UpdateUserAvatar,
   UpdateUserDetails,
-
+  sociallinks
 };
