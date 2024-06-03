@@ -1,7 +1,7 @@
 import Router from 'express';
 
 import { verifyJWT } from '../middleware/auth.js';
-import { webhook,createorder } from '../controllers/razorpay';
+import { webhook,createorder } from '../controllers/razorpay.js';
 
 const paymentRouter = Router();
 
