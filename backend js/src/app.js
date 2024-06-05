@@ -18,9 +18,11 @@ app.use(cookieParser());
 
 import userRouter from "./routes/userRoutes.js";
 import paymentRouter from "./routes/paymentroute.js";
+import googleroute from "./routes/googleroute.js";
 
-app.use("/api/v1/auth", userRouter);
+app.use("/api/auth", userRouter);
 app.use("/api/payment", paymentRouter);
+app.use("/api/google", googleroute);
 
 app.on("error", (error) => {
   console.log("Error on the server", error);
