@@ -20,6 +20,18 @@ const generateAccessTokenandRefreshToken = async (userId) => {
     throw new ApiError(500, "Something Went Wrong While generating Token");
   }
 };
+const checkusername = asyncHandler(async (req, res) => {
+  const { username } = req.body;
+  const user = await User.findOne({ username });
+
+  if (user) {
+    return res.status(200).json(new ApiResponse(200, "Username is Already taken"));
+  }else{
+
+    return res.status(200).json(new ApiResponse(200, "Username is available"));
+  }
+
+});
 
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -310,6 +322,7 @@ export {
   changeCurrentPassword,
   getCurrentUser,
   UpdateUserAvatar,
+  checkusername,
   UpdateUserDetails,
   sociallinks
 };

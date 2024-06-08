@@ -13,11 +13,13 @@ import {
   UpdateUserDetails,
   UpdateUserAvatar,
   sociallinks,
+  checkusername,
 } from "../controllers/authController.js";
 
 const router = Router();
 
 router.route("/signup").post(registerUser);
+router.route("/checkusername").get(checkusername);
 
 router.route("/signin").post(loginUser);
 router.route("/logout").post(verifyJWT, Logout);

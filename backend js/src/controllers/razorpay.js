@@ -4,7 +4,7 @@ import asyncHandler from '../utils/asyncHandler.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import { google } from 'googleapis';
 import { createGoogleMeetEvent } from '../utils/googleCalendar.js';
-import Apierror from '../utils/Apierror.js';
+import Apierror from '../utils/ApiError.js';
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_SECRET_KEY,
