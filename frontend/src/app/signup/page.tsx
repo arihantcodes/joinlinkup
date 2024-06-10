@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { z } from "zod";
 
 import { useRouter } from "next/navigation";
@@ -52,26 +52,34 @@ const Page = () => {
     setIsCheckingUsername(true);
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/auth/checkusername"
-       
+        `http://localhost:4000/api/auth/checkusername?username=${username}`
       );
-      console.log(response)
       setUsernameMessage(response.data.data);
-    } catch (error: any) {
-      setUsernameMessage("Error checking username");
+      console.log(response)
+    } catch (error:any) {
+      setUsernameMessage(error.response.data.data);
+      console.log(error)
+  
     } finally {
       setIsCheckingUsername(false);
     }
   }, []);
+
+  const username = useWatch({
+    control: form.control,
+    name: "username",
+    defaultValue: "",
+  });
+
   useEffect(() => {
+    if (!username) return;
+    
     const delayDebounceFn = setTimeout(() => {
-      if (form.watch("username")) {
-        handleCheckUsername(form.watch("username"));
-      }
+      handleCheckUsername(username);
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [form.watch("username"), handleCheckUsername]);
+  }, [username, handleCheckUsername]);
 
   const onSubmit: SubmitHandler<SignUpFormValues> = async (data) => {
     setIsSubmitting(true);
@@ -113,8 +121,8 @@ const Page = () => {
                     <p
                       className={`text-sm ${
                         usernameMessage === "Username is available"
-                          ? "text-red-500 font-medium"
-                          : "text-green-500"
+                          ? "text-green-500 font-medium"
+                          : "text-red-500"
                       }`}
                     >
                       {usernameMessage}

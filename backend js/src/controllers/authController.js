@@ -21,16 +21,19 @@ const generateAccessTokenandRefreshToken = async (userId) => {
   }
 };
 const checkusername = asyncHandler(async (req, res) => {
-  const { username } = req.body;
-  const user = await User.findOne({ username });
+  try {
+    const { username } = req.query; // Changed from req.body to req.query
 
-  if (user) {
-    return res.status(200).json(new ApiResponse(200, "Username is Already taken"));
-  }else{
+    const user = await User.findOne({ username });
 
-    return res.status(200).json(new ApiResponse(200, "Username is available"));
+    if (user) {
+      return res.status(409).json(new ApiResponse(409, "Username is already taken"));
+    } else {
+      return res.status(200).json(new ApiResponse(200, "Username is available"));
+    }
+  } catch (error) {
+    return res.status(500).json(new ApiResponse(500, "Internal Server Error"));
   }
-
 });
 
 const registerUser = asyncHandler(async (req, res) => {
