@@ -6,11 +6,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeroHighlightDemo } from "@/components/herotext";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/utils/cn";
-import { Spotlight } from "@/components/sunlight";
+
 import { Controller, useForm, useWatch } from "react-hook-form";
 import axios from "axios";
 import { Loader2Icon } from "lucide-react";
+import Navbar from "@/components/small";
 
 const Page = () => {
   const initialValue = "joinlinkup/";
@@ -74,7 +74,7 @@ const Page = () => {
 
   return (
     <div className="h-[50rem] w-full dark:bg-black dark:bg-grid-white/[0.05] bg-grid-black/[0.07] relative">
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="lightblue" />
+      <Navbar/>
       <div className="flex flex-col md:flex-row justify-evenly items-center mt-12 md:mt-2 px-4">
         <div className="flex flex-col mb-0 w-full md:w-auto">
           <HeroHighlightDemo />
@@ -107,7 +107,7 @@ const Page = () => {
             </form>
             <div className="mt-5">
               {isCheckingUsername && <Loader2Icon className="animate-spin" />}
-              <p className={`text-sm flex flex-col ${usernameMessage === "Username is available" ? "text-green-500 font-medium" : "text-red-500"}`}>
+              <p className={`text-lg flex flex-col ${usernameMessage === "Username is available" ? "text-green-600 font-medium text-lg" : "text-red-700"}`}>
                 {usernameMessage}
               </p>
             </div>

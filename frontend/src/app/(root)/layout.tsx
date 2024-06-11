@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
+// import "../global.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Dashboard from "@/components/dash";
 
 
 
@@ -25,7 +26,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-           
+           <Dashboard/>
             
             {children}
           </ThemeProvider>
