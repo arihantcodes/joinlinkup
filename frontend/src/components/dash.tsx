@@ -17,24 +17,17 @@ import {
   Users2,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
+
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
+ 
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -46,27 +39,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import exp from "constants"
+
 import { ModeToggle } from "./ui/moon"
 
 const Dashboard =() => {
@@ -99,7 +79,7 @@ const Dashboard =() => {
             <TooltipTrigger asChild>
               <Link
                 href="/meeting"
-                className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 text-muted-foreground"
               >
                 <Radio className="h-5 w-5" />
                 <span className="sr-only">1:1 Meeting</span>
@@ -113,7 +93,7 @@ const Dashboard =() => {
             <TooltipTrigger asChild>
               <Link
                 href="/products"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                className="flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Package className="h-5 w-5" />
                 <span className="sr-only">Products</span>
@@ -269,7 +249,7 @@ const Dashboard =() => {
           </DropdownMenu>
           <ModeToggle />
         </header>
-      
+         
       </div>
     </div>
   )

@@ -29,6 +29,7 @@ export default function RootLayout({
            <Dashboard/>
             
             {children}
+        
           </ThemeProvider>
   
         </body>
